@@ -48,6 +48,11 @@ public class ShootyMovement : MonoBehaviour {
         timer++;
 	}
 
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        if (coll.gameObject.name == "Edge of Insanity") { Destroy(this.gameObject); }
+    }
+
     void Flip()
     {
         facingRight = !facingRight;

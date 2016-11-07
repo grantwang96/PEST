@@ -24,9 +24,15 @@ public class FeetScript : MonoBehaviour {
             canJump = true;
             Debug.Log("Entered Ground!");
             if (coll.gameObject.tag=="Jelly Head")
-                { GameObject.Find("CapturedJelly").GetComponent<AudioSource>().Play(); }
+            {
+                if (!GameObject.Find("LandJelly").GetComponent<AudioSource>().isPlaying)
+                { GameObject.Find("LandJelly").GetComponent<AudioSource>().Play(); }
+            }
             else
+            {
+                if (!GameObject.Find("Land").GetComponent<AudioSource>().isPlaying)
                 { GameObject.Find("Land").GetComponent<AudioSource>().Play(); }
+            }
             GetComponentInParent<Player_Movement>().isInjured = false;
             GameObject.Find("Body").GetComponent<Animator>().SetBool("Injured", false);
             if (GetComponentInParent<Player_Movement>().jumped)
