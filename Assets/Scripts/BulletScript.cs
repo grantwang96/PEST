@@ -19,6 +19,10 @@ public class BulletScript : MonoBehaviour {
             coll.gameObject.CompareTag("Basic Friend") || coll.gameObject.CompareTag("Shooty Enemy")||
             coll.gameObject.CompareTag("Jelly Enemy") || coll.gameObject.CompareTag("Jelly Friend"))
         {
+            if (coll.gameObject.CompareTag("Basic Friend"))
+            {
+                coll.gameObject.GetComponent<BasicMovement>().health--;
+            }
             Destroy(this.gameObject);
         }
     }

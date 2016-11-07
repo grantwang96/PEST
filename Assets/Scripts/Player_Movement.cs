@@ -110,7 +110,7 @@ public class Player_Movement : MonoBehaviour {
             {
                 GameObject.Find("WalkingSound").GetComponent<AudioSource>().Pause();
             }
-            if (Input.GetKey(KeyCode.Space) && canJump)
+            if (Input.GetKeyDown(KeyCode.Space) && canJump)
             {
                 playerbody.velocity = new Vector2(playerbody.velocity.x, 0);
                 playerbody.AddForce(Vector2.up * 17.5f, ForceMode2D.Impulse);

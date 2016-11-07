@@ -22,7 +22,8 @@ public class FriendBulletScript : MonoBehaviour {
             Destroy(coll.gameObject);
             Destroy(this.gameObject);
         }
-        else if (coll.gameObject.name != "Net" && coll.gameObject.name !="Player" && coll.gameObject.CompareTag("Basic Friend") && coll.gameObject.CompareTag("Jelly Friend") && coll.gameObject.CompareTag("Shooty Friend"))
+        else if (coll.gameObject.name != "Net" && coll.gameObject.name !="Player" && coll.gameObject.CompareTag("Basic Friend")
+            && coll.gameObject.CompareTag("Jelly Friend") && coll.gameObject.CompareTag("Shooty Friend"))
         {
             Destroy(this.gameObject);
         }
