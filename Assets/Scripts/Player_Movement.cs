@@ -150,6 +150,19 @@ public class Player_Movement : MonoBehaviour {
             GameObject.Find("Body").GetComponent<Animator>().SetBool("Injured", true);
             GameObject.Find("Body").GetComponent<Animator>().Play("Injuredv2");
         }
+        if (coll.gameObject.CompareTag("BigMonster"))
+        {
+            Vector3 dir = transform.localScale;
+            if (transform.localScale.x == coll.transform.localScale.x) { playerbody.AddForce(new Vector2(dir.x * 10, 5), ForceMode2D.Impulse); }
+            else { playerbody.AddForce(new Vector2(-dir.x * 10, 5), ForceMode2D.Impulse); }
+            //What the BigMonster Does...
+            currentHealth--;
+            Debug.Log("You got hit! Health: " + currentHealth);
+            GameObject.Find("Hurt").GetComponent<AudioSource>().Play();
+            isInjured = true;
+            GameObject.Find("Body").GetComponent<Animator>().SetBool("Injured", true);
+            GameObject.Find("Body").GetComponent<Animator>().Play("Injuredv2");
+        }
         if (coll.gameObject.name == "EggGirl")
         {
             win = true;
@@ -197,11 +210,29 @@ public class Player_Movement : MonoBehaviour {
             GameObject.Find("Body").GetComponent<Animator>().SetBool("Injured", true);
             GameObject.Find("Body").GetComponent<Animator>().Play("Injuredv2");
         }
+        if (coll.gameObject.name == "View Area")
+        {
+            GameObject munster = coll.gameObject.transform.parent.gameObject;
+            munster.GetComponent<BigMonster>().anim.Play("BigMonsterSwing");
+        }
         if (coll.gameObject.CompareTag("Heal"))
         {
             currentHealth = 10;
             GameObject.Find("SandvichBite").GetComponent<AudioSource>().Play();
             Destroy(coll.gameObject);
+        }
+        if(coll.gameObject.name == "Hit Area")
+        {
+            Vector3 dir = transform.localScale;
+            if (transform.localScale.x == coll.transform.localScale.x) { playerbody.AddForce(new Vector2(dir.x * 10, 5), ForceMode2D.Impulse); }
+            else { playerbody.AddForce(new Vector2(-dir.x * 10, 5), ForceMode2D.Impulse); }
+            //What the BigMonster Does...
+            currentHealth -= 3;
+            Debug.Log("You got hit! Health: " + currentHealth);
+            GameObject.Find("Hurt").GetComponent<AudioSource>().Play();
+            isInjured = true;
+            GameObject.Find("Body").GetComponent<Animator>().SetBool("Injured", true);
+            GameObject.Find("Body").GetComponent<Animator>().Play("Injuredv2");
         }
     }
 

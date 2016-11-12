@@ -34,10 +34,11 @@ public class FeetScript : MonoBehaviour {
                 { GameObject.Find("Land").GetComponent<AudioSource>().Play(); }
             }
             GetComponentInParent<Player_Movement>().isInjured = false;
-            GameObject.Find("Body").GetComponent<Animator>().SetBool("Injured", false);
+            GameObject.Find("Body").GetComponent<Animator>().SetBool("Injuredv2", false);
             if (GetComponentInParent<Player_Movement>().jumped)
             {
                 GameObject.Find("Body").GetComponent<Animator>().Play("Land");
+                //transform.FindChild("Body").gameObject.GetComponent<Animator>().Play("Land");
                 GetComponentInParent<Player_Movement>().jumped = false;
             }
         }
