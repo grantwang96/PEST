@@ -5,6 +5,7 @@ public class BigMonster : MonoBehaviour {
     public int health;
     public bool facingRight = true;
     public Animator anim;
+    public bool moving = true;
 	// Use this for initialization
 	void Start () {
         health = 10;
@@ -19,7 +20,8 @@ public class BigMonster : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.Translate(Vector2.right * 2 * Time.deltaTime);
+        if (moving) { transform.Translate(Vector2.right * 2 * Time.deltaTime); }
+        transform.FindChild("BigMonsterHealth").transform.localScale = new Vector3((float)health, 1, 1);
 	}
     public void Flip()
     {
@@ -39,6 +41,10 @@ public class BigMonster : MonoBehaviour {
             anim.Play("BigMonsterCelebrate");
         }
     }
+    void stopMovement()
+    {
+        moving = false;
+    }
     void enableHitArea()
     {
         this.transform.FindChild("Hit Area").gameObject.SetActive(true);
@@ -46,5 +52,6 @@ public class BigMonster : MonoBehaviour {
     void disableHitArea()
     {
         this.transform.FindChild("Hit Area").gameObject.SetActive(false);
+        moving = true;
     }
 }

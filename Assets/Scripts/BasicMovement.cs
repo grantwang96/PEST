@@ -43,6 +43,12 @@ public class BasicMovement : MonoBehaviour {
         else if(coll.gameObject.CompareTag("Basic Friend") || coll.gameObject.CompareTag("Shooty Friend") && this.transform.CompareTag("Basic Friend")) { Flip(); }
         if(coll.gameObject.CompareTag("Player") && this.transform.CompareTag("Basic Friend") && canFlip) { Flip(); }
         if(coll.gameObject.name=="Edge of Insanity") { Destroy(this.gameObject); }
+        if(coll.gameObject.CompareTag("BigMonster") && this.transform.CompareTag("Basic Friend")) {
+            coll.gameObject.GetComponent<BigMonster>().health--;
+            coll.gameObject.GetComponent<BigMonster>().Flip();
+            Flip();
+            health--;
+        }
     }
     void OnTriggerEnter2D(Collider2D coll)
     {
