@@ -44,7 +44,7 @@ public class BasicMovement : MonoBehaviour {
         if(coll.gameObject.CompareTag("Player") && this.transform.CompareTag("Basic Friend") && canFlip) { Flip(); }
         if(coll.gameObject.name=="Edge of Insanity") { Destroy(this.gameObject); }
         if(coll.gameObject.CompareTag("BigMonster") && this.transform.CompareTag("Basic Friend")) {
-            coll.gameObject.GetComponent<BigMonster>().health--;
+            coll.gameObject.GetComponent<BigMonster>().health-=2;
             coll.gameObject.GetComponent<BigMonster>().Flip();
             Flip();
             health--;

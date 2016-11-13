@@ -155,7 +155,7 @@ public class Player_Movement : MonoBehaviour {
             Vector3 dir = transform.localScale;
             if (transform.localScale.x == coll.transform.localScale.x) { playerbody.AddForce(new Vector2(dir.x * 10, 5), ForceMode2D.Impulse); }
             else { playerbody.AddForce(new Vector2(-dir.x * 10, 5), ForceMode2D.Impulse); }
-            //What the BigMonster Does...
+            coll.gameObject.transform.FindChild("BigMonsterBody").GetComponent<Animator>().Play("BigMonsterCelebrate");
             currentHealth--;
             Debug.Log("You got hit! Health: " + currentHealth);
             GameObject.Find("Hurt").GetComponent<AudioSource>().Play();

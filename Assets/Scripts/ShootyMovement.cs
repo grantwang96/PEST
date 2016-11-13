@@ -52,7 +52,17 @@ public class ShootyMovement : MonoBehaviour {
     {
         if (coll.gameObject.name == "Edge of Insanity") { Destroy(this.gameObject); }
     }
-
+    void OnTriggerEnter2D(Collider2D coll)
+    {
+        if (coll.gameObject.name == "View Area")
+        {
+            coll.transform.parent.FindChild("BigMonsterBody").GetComponent<Animator>().Play("BigMonsterSwing");
+        }
+        if (coll.gameObject.name == "Hit Area")
+        {
+            Destroy(this.gameObject);
+        }
+    }
     void Flip()
     {
         facingRight = !facingRight;
