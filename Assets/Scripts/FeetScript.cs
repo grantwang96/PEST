@@ -5,11 +5,13 @@ public class FeetScript : MonoBehaviour {
 
     public bool canJump;
     public bool playingParticles;
+    public bool touchingHead;
 
 	// Use this for initialization
 	void Start () {
         canJump = true;
         playingParticles = false;
+        touchingHead = false;
 	}
 	
 	// Update is called once per frame
@@ -27,6 +29,7 @@ public class FeetScript : MonoBehaviour {
             {
                 if (!GameObject.Find("LandJelly").GetComponent<AudioSource>().isPlaying)
                 { GameObject.Find("LandJelly").GetComponent<AudioSource>().Play(); }
+                touchingHead = true;
             }
             else
             {
@@ -49,6 +52,7 @@ public class FeetScript : MonoBehaviour {
         {
             canJump = true;
             Debug.Log("Landed!");
+            if(coll.gameObject.CompareTag("Jelly Head")) { touchingHead = true; }
         }
         if (coll.gameObject.transform.parent != null)
         {
@@ -77,6 +81,10 @@ public class FeetScript : MonoBehaviour {
     void OnTriggerExit2D(Collider2D coll)
     {
         if (coll.gameObject.tag == "Floor" || coll.gameObject.tag == "Jelly Head") { canJump = false; }
+        if (coll.gameObject.tag == "Jelly Head")
+        {
+            touchingHead = false;
+        }
         Debug.Log("Left the Ground!");
         if (coll.gameObject.transform.parent != null)
         {

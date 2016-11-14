@@ -20,6 +20,8 @@ public class BigMonsterBodyScript : MonoBehaviour {
     void enableHitArea()
     {
         transform.parent.FindChild("Hit Area").gameObject.SetActive(true);
+        GetComponent<AudioSource>().Play();
+        Debug.Log("Swung Bat");
     }
     void disableHitArea()
     {

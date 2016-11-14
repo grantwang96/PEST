@@ -47,7 +47,8 @@ public class BigMonster : MonoBehaviour {
     {
         if (coll.gameObject.CompareTag("Cliff") || coll.gameObject.CompareTag("Wall")
             || coll.gameObject.CompareTag("Basic Enemy") || coll.gameObject.CompareTag("Shooty Enemy")
-            || coll.gameObject.CompareTag("Jelly Enemy") || coll.gameObject.CompareTag("Jelly Friend"))
+            || coll.gameObject.CompareTag("Jelly Enemy") || coll.gameObject.CompareTag("Jelly Friend")
+            || coll.gameObject.CompareTag("Heal"))
         { Flip(); }
         //if (coll.gameObject.CompareTag("Player"))
         //{
@@ -66,6 +67,7 @@ public class BigMonster : MonoBehaviour {
     void enableHitArea()
     {
         this.transform.FindChild("Hit Area").gameObject.SetActive(true);
+        
     }
     void disableHitArea()
     {

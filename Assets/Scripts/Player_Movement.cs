@@ -186,7 +186,8 @@ public class Player_Movement : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D coll)
     {
-        if(coll.gameObject.CompareTag("Jelly Enemy") && !isInjured)
+        bool touchingHead = transform.FindChild("Feet").GetComponent<FeetScript>().touchingHead;
+        if(coll.gameObject.CompareTag("Jelly Enemy") && !isInjured && !touchingHead)
         {
             Vector3 dir = transform.localScale;
             if (transform.localScale.x == coll.transform.localScale.x) {  playerbody.AddForce(new Vector2(dir.x * 10, 5), ForceMode2D.Impulse);  }
