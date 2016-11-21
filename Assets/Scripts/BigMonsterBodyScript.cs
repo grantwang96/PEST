@@ -28,4 +28,8 @@ public class BigMonsterBodyScript : MonoBehaviour {
         transform.parent.FindChild("Hit Area").gameObject.SetActive(false);
         script.moving = true;
     }
+    void deadFinish()
+    {
+        Destroy(transform.parent.gameObject);
+    }
 }
