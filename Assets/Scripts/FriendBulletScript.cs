@@ -19,7 +19,14 @@ public class FriendBulletScript : MonoBehaviour {
     {
         if (coll.gameObject.CompareTag("Basic Enemy") || coll.gameObject.CompareTag("Shooty Enemy"))
         {
-            Destroy(coll.gameObject);
+            if(coll.gameObject.CompareTag("Basic Enemy"))
+            {
+                coll.gameObject.GetComponent<BasicMovement>().death();
+            }
+            else
+            {
+                coll.gameObject.GetComponent<ShootyMovement>().death();
+            }
             Destroy(this.gameObject);
         }
         else if (coll.gameObject.name != "Net" && coll.gameObject.name !="Player" && coll.gameObject.CompareTag("Basic Friend")

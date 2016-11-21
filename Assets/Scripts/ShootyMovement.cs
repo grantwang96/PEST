@@ -7,12 +7,14 @@ public class ShootyMovement : MonoBehaviour {
     public bool facingRight;
     public GameObject bull;
     public GameObject friendbull;
+    public bool dead;
 
 	// Use this for initialization
 	void Start () {
         player = GameObject.Find("Player").GetComponent<Transform>();
         facingRight = true;
         timer = (int)Random.Range(0, 60);
+        dead = false;
 	}
 	
 	// Update is called once per frame
@@ -52,12 +54,32 @@ public class ShootyMovement : MonoBehaviour {
     {
         if (coll.gameObject.name == "Edge of Insanity") { Destroy(this.gameObject); }
     }
-
+    void OnTriggerEnter2D(Collider2D coll)
+    {
+        if (coll.gameObject.name == "View Area")
+        {
+            coll.transform.parent.FindChild("BigMonsterBody").GetComponent<Animator>().Play("BigMonsterSwing");
+        }
+        if (coll.gameObject.name == "Hit Area")
+        {
+            Destroy(this.gameObject);
+        }
+    }
     void Flip()
     {
         facingRight = !facingRight;
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+    }
+    public void death()
+    {
+        GetComponent<Rigidbody2D>().isKinematic = true;
+        GetComponent<BoxCollider2D>().enabled = false;
+        GetComponent<Animator>().Play("Dead");
+    }
+    void kill()
+    {
+        Destroy(this.gameObject);
     }
 }

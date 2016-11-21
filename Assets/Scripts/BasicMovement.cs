@@ -10,6 +10,7 @@ public class BasicMovement : MonoBehaviour {
     private int initflip;
     public bool canFlip = false;
     public bool cliffyes = true;
+    public bool dead;
     public AudioClip[] sounds = new AudioClip[3];
     // Use this for initialization
     void Start () {
@@ -17,17 +18,21 @@ public class BasicMovement : MonoBehaviour {
         speed = 5;
         delayFlip = 0;
         initflip = Random.Range(240, 300);
+        dead = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
         if (cliffyes == false) { delayFlip++; }
         if (delayFlip == initflip) { cliffyes = true; }
-        if (health <= 0)
+        if (health <= 0 && !dead)
         {
-            Destroy(this.gameObject);
+            death();
         }
-        transform.Translate(Vector2.right * speed * Time.deltaTime);
+        if (!dead)
+        {
+            transform.Translate(Vector2.right * speed * Time.deltaTime);
+        }
 	}
 
     void OnCollisionEnter2D(Collision2D coll)
@@ -37,7 +42,8 @@ public class BasicMovement : MonoBehaviour {
         {
             health--;
             playNoise();
-            Destroy(coll.gameObject);
+            if(coll.gameObject.CompareTag("Basic Enemy")) { coll.gameObject.GetComponent<BasicMovement>().health = 0; }
+            else { coll.gameObject.GetComponent<ShootyMovement>().death(); }
         }
         else if (coll.gameObject.CompareTag("Basic Enemy") || coll.gameObject.CompareTag("Shooty Enemy") || coll.gameObject.CompareTag("Shooty Friend")) { Flip(); }
         else if(coll.gameObject.CompareTag("Basic Friend") || coll.gameObject.CompareTag("Shooty Friend") && this.transform.CompareTag("Basic Friend")) { Flip(); }
@@ -60,5 +66,22 @@ public class BasicMovement : MonoBehaviour {
         AudioClip playnoise = sounds[(int)Random.Range(0, 2)];
         GetComponent<AudioSource>().clip = playnoise;
         GetComponent<AudioSource>().Play();
+    }
+    void kill()
+    {
+        Destroy(this.gameObject);
+    }
+    public void death()
+    {
+        Rigidbody2D rbody = GetComponent<Rigidbody2D>();
+        dead = true;
+        GetComponent<BoxCollider2D>().enabled = false;
+        //rbody.isKinematic = true;
+        rbody.constraints = RigidbodyConstraints2D.FreezeAll;
+        if (this.transform.CompareTag("Basic Friend"))
+        {
+            Destroy(transform.FindChild("Floor").gameObject);
+        }
+        GetComponent<Animator>().Play("Dead");
     }
 }
