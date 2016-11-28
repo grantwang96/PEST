@@ -232,10 +232,10 @@ public class Player_Movement : MonoBehaviour {
                 //What the BigMonster Does...
                 currentHealth -= 3;
                 Debug.Log("You got hit! Health: " + currentHealth);
-                GameObject.Find("Hurt").GetComponent<AudioSource>().Play();
+                transform.FindChild("Hurt").GetComponent<AudioSource>().Play();
                 isInjured = true;
-                GameObject.Find("Body").GetComponent<Animator>().SetBool("Injured", true);
-                GameObject.Find("Body").GetComponent<Animator>().Play("Injuredv2");
+                transform.FindChild("Body").GetComponent<Animator>().SetBool("Injured", true);
+                transform.FindChild("Body").GetComponent<Animator>().Play("Injuredv2");
             }
         }
     }
