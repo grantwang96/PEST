@@ -13,6 +13,7 @@ public class BigMonster : MonoBehaviour {
     public SpriteRenderer BigMonsterBodySprite;
     public bool dead;
     public bool dumb = false;
+    public AudioClip[] noises = new AudioClip[2];
 
 	// Use this for initialization
 	void Start () {
@@ -102,7 +103,12 @@ public class BigMonster : MonoBehaviour {
     void enableHitArea()
     {
         this.transform.FindChild("Hit Area").gameObject.SetActive(true);
-        
+    }
+    void swingGrunt()
+    {
+        AudioClip sound = noises[0];
+        GetComponent<AudioSource>().clip = sound;
+        GetComponent<AudioSource>().Play();
     }
     void disableHitArea()
     {
@@ -114,6 +120,9 @@ public class BigMonster : MonoBehaviour {
         hurt = true;
         hurtframes = 0;
         Debug.Log("He got hurt!");
+        AudioClip sound = noises[1];
+        GetComponent<AudioSource>().clip = sound;
+        GetComponent<AudioSource>().Play();
         BigMonsterBodySprite.color = new Color(255f, 0, 0);
     }
 }
