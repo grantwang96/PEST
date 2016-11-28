@@ -32,4 +32,8 @@ public class BigMonsterBodyScript : MonoBehaviour {
     {
         Destroy(transform.parent.gameObject);
     }
+    void swingGrunt()
+    {
+        transform.parent.GetComponent<BigMonster>().swingGrunt();
+    }
 }

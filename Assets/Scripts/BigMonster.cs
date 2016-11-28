@@ -95,6 +95,14 @@ public class BigMonster : MonoBehaviour {
             || coll.gameObject.CompareTag("Shooty Enemy") || coll.gameObject.CompareTag("Jelly Enemy")
             || coll.gameObject.CompareTag("Jelly Friend") || coll.gameObject.CompareTag("BigMonster") && moving)
         { Flip(); }
+        if (coll.gameObject.CompareTag("Floor") && moving) { transform.FindChild("feet particles").gameObject.SetActive(true); }
+    }
+    void OnCollisionExit2D(Collision2D coll)
+    {
+        if (coll.gameObject.CompareTag("Floor"))
+        {
+            transform.FindChild("feet particles").gameObject.SetActive(false);
+        }
     }
     void stopMovement()
     {
@@ -104,7 +112,7 @@ public class BigMonster : MonoBehaviour {
     {
         this.transform.FindChild("Hit Area").gameObject.SetActive(true);
     }
-    void swingGrunt()
+    public void swingGrunt()
     {
         AudioClip sound = noises[0];
         GetComponent<AudioSource>().clip = sound;

@@ -57,8 +57,8 @@ public class FeetScript : MonoBehaviour {
         if (coll.gameObject.transform.parent != null)
         {
             if (coll.gameObject.transform.parent.name == "Platforms") {
-                if (Input.GetKey(GameObject.Find("Player").GetComponent<Player_Movement>().rightKey) ||
-                    Input.GetKey(GameObject.Find("Player").GetComponent<Player_Movement>().leftKey))
+                if (Input.GetKeyDown(GameObject.Find("Player").GetComponent<Player_Movement>().rightKey) ||
+                    Input.GetKeyDown(GameObject.Find("Player").GetComponent<Player_Movement>().leftKey))
                 {
                     if (!playingParticles)
                     {

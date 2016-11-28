@@ -26,10 +26,16 @@ public class BasicMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (transform.FindChild("Hurt").GetComponent<ParticleSystem>().isPlaying)
+        {
+            transform.FindChild("Hurt").GetComponent<ParticleSystem>().Stop();
+            hurt = false;
+        }
         if (cliffyes == false) { delayFlip++; }
         if (delayFlip >= initflip) { cliffyes = true; }
         if (health <= 0 && !dead) { death(); }
         if (!dead) { transform.Translate(Vector2.right * speed * Time.deltaTime); }
+        if (hurt) { transform.FindChild("Hurt").GetComponent<ParticleSystem>().Play(); }
 	}
 
     void OnCollisionEnter2D(Collision2D coll)
@@ -44,7 +50,11 @@ public class BasicMovement : MonoBehaviour {
                 if (coll.gameObject.CompareTag("Basic Enemy")) { coll.gameObject.GetComponent<BasicMovement>().health = 0; }
                 else if(coll.gameObject.CompareTag("Shooty Enemy")) { coll.gameObject.GetComponent<ShootyMovement>().death(); }
                 else if (coll.gameObject.CompareTag("BigMonster")) { coll.gameObject.GetComponent<BigMonster>().health -= 2; }
-                if (!GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Dead")) { health--; }
+                if (!GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Dead"))
+                {
+                    health--;
+                    hurt = true;
+                }
             }
             if(coll.gameObject.CompareTag("Basic Friend") || coll.gameObject.CompareTag("Shooty Enemy")
                || coll.gameObject.CompareTag("Shooty Friend")) { Flip(); }
@@ -71,7 +81,7 @@ public class BasicMovement : MonoBehaviour {
     }
     void playNoise()
     {
-        AudioClip playnoise = sounds[(int)Random.Range(0, 2)];
+        AudioClip playnoise = sounds[(int)Random.Range(0, 3)];
         GetComponent<AudioSource>().clip = playnoise;
         GetComponent<AudioSource>().Play();
     }

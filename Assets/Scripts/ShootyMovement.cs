@@ -20,6 +20,8 @@ public class ShootyMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         float xdif = transform.position.x - player.position.x;
+        if (transform.FindChild("pew").GetComponent<ParticleSystem>().isPlaying)
+        { transform.FindChild("pew").GetComponent<ParticleSystem>().Stop(); }
         if(this.CompareTag("Shooty Enemy"))
         {
             if (xdif >= 0) { if (facingRight) { Flip(); } }
@@ -34,6 +36,7 @@ public class ShootyMovement : MonoBehaviour {
                 bullet.transform.position = new Vector3(transform.position.x + 2f * transform.localScale.x, transform.position.y, transform.position.z);
                 bullet.transform.localScale = new Vector3(transform.localScale.x, bullet.transform.localScale.y, bullet.transform.localScale.z);
                 timer = 0;
+                transform.FindChild("pew").GetComponent<ParticleSystem>().Play();
             }
         }
         else
@@ -45,6 +48,7 @@ public class ShootyMovement : MonoBehaviour {
                 bullet.transform.position = new Vector3(transform.position.x + 2f * transform.localScale.x, transform.position.y, transform.position.z);
                 bullet.transform.localScale = new Vector3(transform.localScale.x, bullet.transform.localScale.y, bullet.transform.localScale.z);
                 timer = 0;
+                transform.FindChild("pew").GetComponent<ParticleSystem>().Play();
             }
         }
         timer++;
