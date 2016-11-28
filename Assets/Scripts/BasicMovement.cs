@@ -49,7 +49,7 @@ public class BasicMovement : MonoBehaviour {
                 playNoise();
                 if (coll.gameObject.CompareTag("Basic Enemy")) { coll.gameObject.GetComponent<BasicMovement>().health = 0; }
                 else if(coll.gameObject.CompareTag("Shooty Enemy")) { coll.gameObject.GetComponent<ShootyMovement>().death(); }
-                else if (coll.gameObject.CompareTag("BigMonster")) { coll.gameObject.GetComponent<BigMonster>().health -= 2; }
+                else if (coll.gameObject.CompareTag("BigMonster")) { coll.gameObject.GetComponent<BigMonster>().health -= 3; }
                 if (!GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Dead"))
                 {
                     health--;

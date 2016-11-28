@@ -120,7 +120,7 @@ public class Player_Movement : MonoBehaviour {
                 rotated = 0;
                 leftTilt = !leftTilt;
                 increaser = Mathf.Abs(increaser);
-                GameObject.Find("Body").GetComponent<Animator>().Play("Jump");
+                transform.FindChild("Body").GetComponent<Animator>().Play("Jump");
             }
             if (Input.GetKey(KeyCode.P)) { SceneManager.LoadScene(0); }
         }
@@ -145,10 +145,10 @@ public class Player_Movement : MonoBehaviour {
             if (coll.gameObject.CompareTag("Basic Enemy")) { coll.gameObject.GetComponent<BasicMovement>().Flip(); } 
             currentHealth--;
             Debug.Log("You got hit! Health: " + currentHealth);
-            GameObject.Find("Hurt").GetComponent<AudioSource>().Play();
+            transform.FindChild("Hurt").GetComponent<AudioSource>().Play();
             isInjured = true;
-            GameObject.Find("Body").GetComponent<Animator>().SetBool("Injured", true);
-            GameObject.Find("Body").GetComponent<Animator>().Play("Injuredv2");
+            transform.FindChild("Body").GetComponent<Animator>().SetBool("Injured", true);
+            transform.FindChild("Body").GetComponent<Animator>().Play("Injuredv2");
         }
         if (coll.gameObject.CompareTag("BigMonster"))
         {
@@ -158,10 +158,10 @@ public class Player_Movement : MonoBehaviour {
             coll.gameObject.transform.FindChild("BigMonsterBody").GetComponent<Animator>().Play("BigMonsterCelebrate");
             currentHealth--;
             Debug.Log("You got hit! Health: " + currentHealth);
-            GameObject.Find("Hurt").GetComponent<AudioSource>().Play();
+            transform.FindChild("Hurt").GetComponent<AudioSource>().Play();
             isInjured = true;
-            GameObject.Find("Body").GetComponent<Animator>().SetBool("Injured", true);
-            GameObject.Find("Body").GetComponent<Animator>().Play("Injuredv2");
+            transform.FindChild("Body").GetComponent<Animator>().SetBool("Injured", true);
+            transform.FindChild("Body").GetComponent<Animator>().Play("Injuredv2");
         }
         if (coll.gameObject.name == "EggGirl")
         {
@@ -194,10 +194,10 @@ public class Player_Movement : MonoBehaviour {
             else {  playerbody.AddForce(new Vector2(-dir.x * 10, 5), ForceMode2D.Impulse); }
             currentHealth--;
             Debug.Log("You got hit! Health: " + currentHealth);
-            GameObject.Find("Hurt").GetComponent<AudioSource>().Play();
+            transform.FindChild("Hurt").GetComponent<AudioSource>().Play();
             isInjured = true;
-            GameObject.Find("Body").GetComponent<Animator>().SetBool("Injured", true);
-            GameObject.Find("Body").GetComponent<Animator>().Play("Injuredv2");
+            transform.FindChild("Body").GetComponent<Animator>().SetBool("Injured", true);
+            transform.FindChild("Body").GetComponent<Animator>().Play("Injuredv2");
         }
         if (coll.gameObject.CompareTag("MeanBullet") && !isInjured)
         {
@@ -206,10 +206,10 @@ public class Player_Movement : MonoBehaviour {
             else { playerbody.AddForce(new Vector2(-dir.x * 10, 5), ForceMode2D.Impulse); }
             currentHealth--;
             Debug.Log("You got hit! Health: " + currentHealth);
-            GameObject.Find("Hurt").GetComponent<AudioSource>().Play();
+            transform.FindChild("Hurt").GetComponent<AudioSource>().Play();
             isInjured = true;
-            GameObject.Find("Body").GetComponent<Animator>().SetBool("Injured", true);
-            GameObject.Find("Body").GetComponent<Animator>().Play("Injuredv2");
+            transform.FindChild("Body").GetComponent<Animator>().SetBool("Injured", true);
+            transform.FindChild("Body").GetComponent<Animator>().Play("Injuredv2");
         }
         if (coll.gameObject.name == "View Area")
         {
