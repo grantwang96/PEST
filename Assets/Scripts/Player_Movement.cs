@@ -125,7 +125,16 @@ public class Player_Movement : MonoBehaviour {
             if (Input.GetKey(KeyCode.P)) { SceneManager.LoadScene(0); }
         }
 	}
-
+    void OnCollisionStay2D(Collision2D coll)
+    {
+        if (coll.gameObject.CompareTag("Wall"))
+        {
+            if (!GameObject.Find("WallSmack").GetComponent<AudioSource>().isPlaying && Input.GetKey(leftKey) || Input.GetKey(rightKey))
+            {
+                GameObject.Find("WallSmack").GetComponent<AudioSource>().Play();
+            }
+        }
+    }
     void OnCollisionEnter2D(Collision2D coll)
     {
         /*if (coll.gameObject.tag=="Floor" && jumped){
@@ -137,6 +146,7 @@ public class Player_Movement : MonoBehaviour {
             //coll.gameObject.GetComponent<AudioSource>().Play();
             lose();
         }
+        
         if (coll.gameObject.CompareTag("Basic Enemy") || coll.gameObject.CompareTag("Shooty Enemy") && !isInjured)
         {
             Vector3 dir = transform.localScale;
