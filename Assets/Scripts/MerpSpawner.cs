@@ -4,32 +4,31 @@ using System.Collections;
 public class MerpSpawner : MonoBehaviour {
     public GameObject merple;
     private int timer;
-    private int timer2;
-    private bool facingRight;
+    private bool facingRight = true;
+    private bool active = true;
 	// Use this for initialization
 	void Start () {
         timer = 0;
-        facingRight = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        timer2++;
-        if (timer == 120)
+        if (timer >= 300)
         {
             GameObject merp = Instantiate(merple);
             merp.transform.position = new Vector3(transform.position.x + 1f * 
                 transform.localScale.x, transform.position.y, transform.position.z);
             merp.GetComponent<BasicMovement>().cliffyes = false;
-            if (!facingRight)
+            if (facingRight)
             {
                 merp.GetComponent<BasicMovement>().Flip();
             }
-            merp.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(10, 30)*merp.transform.localScale.x, Random.Range(5, 15)),ForceMode2D.Impulse);
+            merp.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(1, 20)*merp.transform.localScale.x, Random.Range(0, 5)),ForceMode2D.Impulse);
+            merp.GetComponent<BasicMovement>().dumb = true;
             timer = 0;
         }
-        timer++;
-        if (timer2 == 1200) { Destroy(this.gameObject); }
+        if (active) { timer++; }
+        else { timer = 0; }
 	}
 
     void Flip()
@@ -38,5 +37,19 @@ public class MerpSpawner : MonoBehaviour {
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+    }
+    void OnTriggerEnter2D(Collider2D coll)
+    {
+        if (coll.gameObject.CompareTag("Player"))
+        {
+            active = false;
+        }
+    }
+    void OnTriggerExit2D(Collider2D coll)
+    {
+        if (coll.gameObject.CompareTag("Player"))
+        {
+            active = true;
+        }
     }
 }

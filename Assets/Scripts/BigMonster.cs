@@ -12,6 +12,8 @@ public class BigMonster : MonoBehaviour {
     private Color initColor;
     public SpriteRenderer BigMonsterBodySprite;
     public bool dead;
+    public bool dumb = false;
+
 	// Use this for initialization
 	void Start () {
         BigMonsterBodySprite = transform.FindChild("BigMonsterBody").gameObject.GetComponent<SpriteRenderer>();
@@ -71,23 +73,26 @@ public class BigMonster : MonoBehaviour {
             Destroy(coll.gameObject);
             getHurt();
         }
-        if (coll.gameObject.CompareTag("Heal") || coll.gameObject.CompareTag("Cliff") && anim.GetCurrentAnimatorStateInfo(0).IsName("BigMonsterWalk"))
+        if (coll.gameObject.CompareTag("Heal"))
         {
             Flip();
         }
+        if(coll.gameObject.CompareTag("Cliff") && anim.GetCurrentAnimatorStateInfo(0).IsName("BigMonsterWalk") && !dumb)
+        {
+            Flip();
+        }
+
     }
     void OnCollisionEnter2D(Collision2D coll)
     {
         if (coll.gameObject.CompareTag("Basic Friend"))
         {
-            health -= 2;
-            coll.gameObject.GetComponent<BasicMovement>().health--;
             coll.gameObject.GetComponent<BasicMovement>().Flip();
             getHurt();
         }
         if (coll.gameObject.CompareTag("Wall") || coll.gameObject.CompareTag("Basic Enemy")
             || coll.gameObject.CompareTag("Shooty Enemy") || coll.gameObject.CompareTag("Jelly Enemy")
-            || coll.gameObject.CompareTag("Jelly Friend") && moving)
+            || coll.gameObject.CompareTag("Jelly Friend") || coll.gameObject.CompareTag("BigMonster") && moving)
         { Flip(); }
     }
     void stopMovement()
@@ -109,6 +114,6 @@ public class BigMonster : MonoBehaviour {
         hurt = true;
         hurtframes = 0;
         Debug.Log("He got hurt!");
-        BigMonsterBodySprite.color = new Color(1f, 0, 0);
+        BigMonsterBodySprite.color = new Color(255f, 0, 0);
     }
 }

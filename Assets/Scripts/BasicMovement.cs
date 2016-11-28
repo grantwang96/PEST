@@ -3,56 +3,64 @@ using System.Collections;
 
 public class BasicMovement : MonoBehaviour {
 
-    public int health = 2;
+    public int health;
     public float speed;
     public bool facingRight;
-    private int delayFlip;
-    private int initflip;
+    public int delayFlip;
+    public int initflip;
     public bool canFlip = false;
     public bool cliffyes = true;
     public bool dead;
+    public bool dumb = false;
     public AudioClip[] sounds = new AudioClip[3];
+    private bool hurt = false;
     // Use this for initialization
     void Start () {
         facingRight = true;
         speed = 5;
         delayFlip = 0;
-        initflip = Random.Range(240, 300);
+        initflip = Random.Range(150, 200);
         dead = false;
+        health = 2;
 	}
 	
 	// Update is called once per frame
 	void Update () {
         if (cliffyes == false) { delayFlip++; }
-        if (delayFlip == initflip) { cliffyes = true; }
-        if (health <= 0 && !dead)
-        {
-            death();
-        }
-        if (!dead)
-        {
-            transform.Translate(Vector2.right * speed * Time.deltaTime);
-        }
+        if (delayFlip >= initflip) { cliffyes = true; }
+        if (health <= 0 && !dead) { death(); }
+        if (!dead) { transform.Translate(Vector2.right * speed * Time.deltaTime); }
 	}
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if (coll.gameObject.CompareTag("Floor")) { canFlip = true; }
-        if ((coll.gameObject.CompareTag("Basic Enemy") || coll.gameObject.CompareTag("Shooty Enemy")) && this.transform.CompareTag("Basic Friend"))
+        if(coll.gameObject.CompareTag("Floor") && !canFlip) { canFlip = true; }
+        if(this.gameObject.CompareTag("Basic Friend"))
         {
-            health--;
-            playNoise();
-            if(coll.gameObject.CompareTag("Basic Enemy")) { coll.gameObject.GetComponent<BasicMovement>().health = 0; }
-            else { coll.gameObject.GetComponent<ShootyMovement>().death(); }
+            if ((coll.gameObject.CompareTag("Basic Enemy") || coll.gameObject.CompareTag("Shooty Enemy")
+            || coll.gameObject.CompareTag("BigMonster")))
+            {
+                playNoise();
+                if (coll.gameObject.CompareTag("Basic Enemy")) { coll.gameObject.GetComponent<BasicMovement>().health = 0; }
+                else if(coll.gameObject.CompareTag("Shooty Enemy")) { coll.gameObject.GetComponent<ShootyMovement>().death(); }
+                else if (coll.gameObject.CompareTag("BigMonster")) { coll.gameObject.GetComponent<BigMonster>().health -= 2; }
+                if (!GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Dead")) { health--; }
+            }
+            if(coll.gameObject.CompareTag("Basic Friend") || coll.gameObject.CompareTag("Shooty Enemy")
+               || coll.gameObject.CompareTag("Shooty Friend")) { Flip(); }
+            if (coll.gameObject.CompareTag("Player") && canFlip) { Flip(); }
         }
-        else if (coll.gameObject.CompareTag("Basic Enemy") || coll.gameObject.CompareTag("Shooty Enemy") || coll.gameObject.CompareTag("Shooty Friend")) { Flip(); }
-        else if(coll.gameObject.CompareTag("Basic Friend") || coll.gameObject.CompareTag("Shooty Friend") && this.transform.CompareTag("Basic Friend")) { Flip(); }
-        if(coll.gameObject.CompareTag("Player") && this.transform.CompareTag("Basic Friend") && canFlip) { Flip(); }
-        if(coll.gameObject.name=="Edge of Insanity") { Destroy(this.gameObject); }
+        else if (this.gameObject.CompareTag("Basic Enemy"))
+        {
+            if(coll.gameObject.CompareTag("Basic Enemy") || coll.gameObject.CompareTag("Shooty Enemy")
+               || coll.gameObject.CompareTag("Shooty Friend") || coll.gameObject.CompareTag("BigMonster")) { Flip(); }
+        }
+        if(coll.gameObject.name =="Edge of Insanity") { Destroy(this.gameObject); }
     }
     void OnTriggerEnter2D(Collider2D coll)
     {
-        if ((coll.gameObject.CompareTag("Cliff") || coll.gameObject.CompareTag("Wall")) && canFlip && cliffyes) { Flip(); }
+        if ((coll.gameObject.CompareTag("Wall")) && canFlip && cliffyes) { Flip(); }
+        if(coll.gameObject.CompareTag("Cliff") && canFlip && cliffyes && !dumb) { Flip(); }
     }
     public void Flip()
     {

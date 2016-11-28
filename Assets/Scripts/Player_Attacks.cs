@@ -84,6 +84,7 @@ public class Player_Attacks : MonoBehaviour {
                         {
                             newfri.GetComponent<BasicMovement>().facingRight = false;
                             newfri.transform.localScale = new Vector3(newfri.transform.localScale.x * -1, newfri.transform.localScale.y, newfri.transform.localScale.z);
+                            newfri.GetComponent<BasicMovement>().delayFlip = newfri.GetComponent<BasicMovement>().initflip;
                         }
                         else
                         {
@@ -170,4 +171,23 @@ public class Player_Attacks : MonoBehaviour {
         GameObject.Find("MonsterNoises").GetComponent<AudioSource>().clip = monsterNoises[(int)Random.Range(3, 5)];
         GameObject.Find("MonsterNoises").GetComponent<AudioSource>().Play();
     }
+    void merpGet()
+    {
+        transform.FindChild("MerpGet").gameObject.SetActive(true);
+    }
+    void jellyGet()
+    {
+        transform.FindChild("JellyGet").gameObject.SetActive(true);
+    }
+    void cactusGet()
+    {
+        transform.FindChild("CactusGet").gameObject.SetActive(true);
+    }
+    void stopGet()
+    {
+        transform.FindChild("MerpGet").gameObject.SetActive(false);
+        transform.FindChild("JellyGet").gameObject.SetActive(false);
+        transform.FindChild("CactusGet").gameObject.SetActive(false);
+    }
 }
+
