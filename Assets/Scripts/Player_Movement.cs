@@ -129,7 +129,7 @@ public class Player_Movement : MonoBehaviour {
     {
         if (coll.gameObject.CompareTag("Wall"))
         {
-            if (!GameObject.Find("WallSmack").GetComponent<AudioSource>().isPlaying && Input.GetKey(leftKey) || Input.GetKey(rightKey))
+            if (!GameObject.Find("WallSmack").GetComponent<AudioSource>().isPlaying && Input.GetKeyDown(leftKey) || Input.GetKeyDown(rightKey))
             {
                 GameObject.Find("WallSmack").GetComponent<AudioSource>().Play();
             }
@@ -137,11 +137,15 @@ public class Player_Movement : MonoBehaviour {
     }
     void OnCollisionEnter2D(Collision2D coll)
     {
-        /*if (coll.gameObject.tag=="Floor" && jumped){
-            GetComponentInChildren<Animator>().Play("Land");
-            jumped = false;
-        }*/
-        if(coll.gameObject.name=="Edge of Insanity")
+        if (coll.gameObject.CompareTag("Wall"))
+        {
+            if (!GameObject.Find("WallSmack").GetComponent<AudioSource>().isPlaying
+                && Input.GetKey(leftKey) || Input.GetKey(rightKey))
+            {
+                GameObject.Find("WallSmack").GetComponent<AudioSource>().Play();
+            }
+        }
+        if (coll.gameObject.name=="Edge of Insanity")
         {
             //coll.gameObject.GetComponent<AudioSource>().Play();
             lose();
@@ -176,16 +180,12 @@ public class Player_Movement : MonoBehaviour {
         if (coll.gameObject.name == "EggGirl")
         {
             win = true;
+            GameObject.Find("Background").GetComponent<AudioSource>().Stop();
             coll.gameObject.GetComponent<EggGirl>().winState = true;
             GameObject.Find("EggHeart").GetComponent<ParticleSystem>().Play();
         }
     }
-
-    /*void OnCollisionExit2D(Collision2D coll)
-    {
-        if (coll.gameObject.tag == "Floor") { canJump = false; }
-    }*/
-
+    
     void Flip()
     {
         facingRight = !facingRight;
